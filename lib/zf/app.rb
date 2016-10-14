@@ -1,0 +1,2 @@
+class Zf::App
+end
