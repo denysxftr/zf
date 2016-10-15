@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Zf::Controller do
-  before { Timecop.freeze(Time.local(2017)) }
+  before { Timecop.freeze('2017-01-01T00:00:00+0000') }
 
   let(:controller) do
     Class.new(described_class) do
@@ -26,7 +26,7 @@ describe Zf::Controller do
 
     it 'generated proc calls action' do
       expect(controller.action(:test_action).call(Rack::MockRequest.env_for('/')))
-        .to eq([200, { 'Date' => 'Sat, 31 Dec 2016 22:00:00 GMT', 'Content-Type' => 'text/plain' }, ['test']])
+        .to eq([200, { 'Date' => 'Sun, 01 Jan 2017 00:00:00 GMT', 'Content-Type' => 'text/plain' }, ['test']])
     end
   end
 
@@ -46,7 +46,7 @@ describe Zf::Controller do
         expect(subject)
           .to eq([
             200,
-            { 'Date' => 'Sat, 31 Dec 2016 22:00:00 GMT', 'Content-Type' => 'text/plain' },
+            { 'Date' => 'Sun, 01 Jan 2017 00:00:00 GMT', 'Content-Type' => 'text/plain' },
             ['{"a"=>"b"}']
           ])
       end
@@ -59,7 +59,7 @@ describe Zf::Controller do
         expect(subject)
           .to eq([
             200,
-            { 'Date' => 'Sat, 31 Dec 2016 22:00:00 GMT', 'Content-Type' => 'application/json' },
+            { 'Date' => 'Sun, 01 Jan 2017 00:00:00 GMT', 'Content-Type' => 'application/json' },
             ['{"a":"b"}']
           ])
       end
@@ -73,7 +73,7 @@ describe Zf::Controller do
         expect(subject)
           .to eq([
             200,
-            { 'Date' => 'Sat, 31 Dec 2016 22:00:00 GMT', 'Content-Type' => 'application/json' },
+            { 'Date' => 'Sun, 01 Jan 2017 00:00:00 GMT', 'Content-Type' => 'application/json' },
             ['{"a":"b","param":"value"}']
           ])
       end
