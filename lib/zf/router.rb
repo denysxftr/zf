@@ -56,6 +56,8 @@ private
   def get_controller(app)
     return app unless app.is_a?(String)
     controller_name, action_name = app.split('#')
-    Kernel.const_get(controller_name.capitalize + 'Controller').send(:action, action_name)
+    Kernel
+      .const_get(Zf::Utils.to_upper_camel_case(controller_name + '_controller'))
+      .send(:action, action_name)
   end
 end
