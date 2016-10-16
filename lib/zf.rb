@@ -1,4 +1,6 @@
 require 'rack'
+require 'oj'
+require 'forwardable'
 require 'zf/version'
 require 'zf/utils'
 require 'zf/router'

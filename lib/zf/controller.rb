@@ -1,5 +1,3 @@
-require 'oj'
-
 class Zf::Controller
   RESPONSE_TYPES = {
     text: ['text/plain', ->(c) { c.to_s }],
