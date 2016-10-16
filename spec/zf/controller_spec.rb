@@ -16,6 +16,10 @@ describe Zf::Controller do
       def json_action
         response(:json, params)
       end
+
+      def html_action
+        response(:html, '<h1>test</h1>')
+      end
     end
   end
 
@@ -48,6 +52,19 @@ describe Zf::Controller do
             200,
             { 'Date' => 'Sun, 01 Jan 2017 00:00:00 GMT', 'Content-Type' => 'text/plain' },
             ['{"a"=>"b"}']
+          ])
+      end
+    end
+
+    context 'when html response' do
+      let(:action) { :html_action }
+
+      it 'successfully responds' do
+        expect(subject)
+          .to eq([
+            200,
+            { 'Date' => 'Sun, 01 Jan 2017 00:00:00 GMT', 'Content-Type' => 'text/html' },
+            ['<h1>test</h1>']
           ])
       end
     end
