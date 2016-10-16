@@ -2,8 +2,9 @@ require 'oj'
 
 class Zf::Controller
   RESPONSE_TYPES = {
-    text: ['text/plain', ->(c) { c }],
-    json: ['application/json', ->(c) { c.is_a?(String) ? c : Oj.dump(c) }]
+    text: ['text/plain', ->(c) { c.to_s }],
+    json: ['application/json', ->(c) { c.is_a?(String) ? c : Oj.dump(c) }],
+    html: ['text/html', ->(c) { c.is_a?(Symbol) ? erb(c) : c }]
   }.freeze
 
   def self.action(action_name)
@@ -11,6 +12,7 @@ class Zf::Controller
   end
 
   def call(env)
+    @env = env
     @request = Rack::Request.new(env)
     @request.params.merge!(env['router.params'] || {})
     send(@action)
@@ -37,5 +39,9 @@ private
 
   def params
     request.params
+  end
+
+  def erb(view)
+    ERB.new(File.read(File.join(@env['zf']['views_dir'], "#{view}.erb"))).result(binding)
   end
 end

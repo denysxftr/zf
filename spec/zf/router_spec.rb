@@ -63,7 +63,7 @@ describe Zf::Router do
   context 'when controller name passed' do
     it 'gets controller and calls action' do
       expect(subject.call({ 'PATH_INFO' => '/test', 'REQUEST_METHOD' => 'GET' }))
-        .to eq [200, {}, ["test controller some action"]]
+        .to eq [200, {}, ['test controller some action']]
     end
   end
 end
